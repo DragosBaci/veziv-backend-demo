@@ -3,8 +3,7 @@ import { JwtGuard } from '../auth/guard';
 import { HomeService } from './home.service';
 import { CreateHomeDto, EditHomeDto } from './dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { diskStorage } from 'multer';
-import { extname } from 'path';
+import { fileUploadConfig } from '../config/file-upload.config';
 
 @Controller('home')
 export class HomeController {
@@ -17,20 +16,7 @@ export class HomeController {
 
   @UseGuards(JwtGuard)
   @Put()
-  @UseInterceptors(
-    FileInterceptor('image', {
-      storage: diskStorage({
-        destination: './uploads/',
-        filename: (req, file, cb) => {
-          const randomName = Array(32)
-            .fill(null)
-            .map(() => Math.round(Math.random() * 16).toString(16))
-            .join('');
-          return cb(null, `${randomName}${extname(file.originalname)}`);
-        },
-      }),
-    }),
-  )
+  @UseInterceptors(FileInterceptor('image', fileUploadConfig('./uploads/')))
   editHome(@UploadedFile() image, @Body() dto: EditHomeDto) {
     return this.homeService.editHome(dto, image);
   }
@@ -42,21 +28,9 @@ export class HomeController {
     return this.homeService.deleteHome();
   }
 
+  @UseGuards(JwtGuard)
   @Post()
-  @UseInterceptors(
-    FileInterceptor('image', {
-      storage: diskStorage({
-        destination: './uploads/',
-        filename: (req, file, cb) => {
-          const randomName = Array(32)
-            .fill(null)
-            .map(() => Math.round(Math.random() * 16).toString(16))
-            .join('');
-          return cb(null, `${randomName}${extname(file.originalname)}`);
-        },
-      }),
-    }),
-  )
+  @UseInterceptors(FileInterceptor('image', fileUploadConfig('./uploads/')))
   async uploadSingleFile(@UploadedFile() image, @Body() dto: CreateHomeDto) {
     return this.homeService.createHome(dto, image);
   }
