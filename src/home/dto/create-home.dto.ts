@@ -1,9 +1,13 @@
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-export class EditBookmarkDto {
+export class CreateHomeDto {
   @IsString()
   @IsNotEmpty()
   title: string;
+
+  @IsString()
+  @IsOptional()
+  subtitle?: string;
 
   @IsString()
   @IsOptional()
@@ -11,9 +15,5 @@ export class EditBookmarkDto {
 
   @IsString()
   @IsNotEmpty()
-  link: string;
-
-  @IsString()
-  @IsNotEmpty()
-  image: string;
+  email: string;
 }
