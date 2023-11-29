@@ -12,4 +12,8 @@ export class EditBookmarkDto {
   @IsString()
   @IsOptional()
   link?: string;
+
+  @IsString()
+  @IsOptional()
+  image?: string;
 }

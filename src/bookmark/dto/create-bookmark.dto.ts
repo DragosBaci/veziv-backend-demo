@@ -12,4 +12,8 @@ export class CreateBookmarkDto {
   @IsString()
   @IsNotEmpty()
   link: string;
+
+  @IsString()
+  @IsNotEmpty()
+  image: string;
 }
