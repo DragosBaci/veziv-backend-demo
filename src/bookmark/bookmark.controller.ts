@@ -10,6 +10,7 @@ import {
   Post,
   Res,
   UploadedFile,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
 import { BookmarkService } from './bookmark.service';
@@ -17,6 +18,7 @@ import { CreateBookmarkDto, EditBookmarkDto } from './dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { JwtGuard } from '../auth/guard';
 
 @Controller('bookmarks')
 export class BookmarkController {
@@ -27,22 +29,26 @@ export class BookmarkController {
     return this.bookmarkService.getBookmark();
   }
 
+  @UseGuards(JwtGuard)
   @Post()
   async createBookmark(@Body() dto: CreateBookmarkDto) {
     return this.bookmarkService.createBookmark(dto);
   }
 
+  @UseGuards(JwtGuard)
   @Patch()
-  editBookmarkById(@Body() dto: EditBookmarkDto) {
+  editBookmark(@Body() dto: EditBookmarkDto) {
     return this.bookmarkService.editBookmark(dto);
   }
 
+  @UseGuards(JwtGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete()
   deleteBookmarkById() {
     return this.bookmarkService.deleteBookmark();
   }
 
+  @UseGuards(JwtGuard)
   @Post('upload')
   @UseInterceptors(
     FileInterceptor('image', {

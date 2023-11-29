@@ -30,3 +30,13 @@ model Bookmark {
   link        String
   image       String
 }
+
+model Home {
+  id Int @id @default(autoincrement())
+
+  title       String
+  subtitle    String?
+  description String?
+  image       String?
+  email       String
+}
