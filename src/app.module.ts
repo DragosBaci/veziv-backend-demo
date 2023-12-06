@@ -6,7 +6,6 @@ import { ConfigModule } from '@nestjs/config';
 import { HomeModule } from './home/home.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { AboutModule } from './about/about.module';
-import { WorkModule } from './work/work.module';
 import { CardModule } from './card/card.module';
 
 @Module({
@@ -18,7 +17,6 @@ import { CardModule } from './card/card.module';
     PrismaModule,
     HomeModule,
     AboutModule,
-    WorkModule,
     CardModule,
   ],
 })

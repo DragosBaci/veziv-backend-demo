@@ -59,4 +59,5 @@ export class CardController {
   findImage(@Param('imagename') imagename, @Res() res) {
     return res.sendFile(imagename, { root: 'uploads' });
   }
+
 }

@@ -1,8 +1,24 @@
 import { PrismaClient } from '@prisma/client';
+import * as argon from 'argon2';
 
 export class CardSeeder {
   static async run(prisma: PrismaClient): Promise<void> {
     try {
+      const user = {
+        email: 'veziv@gmail.com',
+        password: 'password',
+      };
+      const hash = await argon.hash(user.password);
+
+      const createUser = await prisma.user.upsert({
+        where: { id: 1 },
+        update: {},
+        create: {
+          email: user.email,
+          hash: hash,
+        },
+      });
+
       const home = await prisma.home.upsert({
         where: { id: 1 },
         update: {},
