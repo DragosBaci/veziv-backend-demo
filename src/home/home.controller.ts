@@ -1,4 +1,18 @@
-import { Body, Controller, Delete, Get, HttpCode, HttpStatus, Post, Put, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+  Res,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { JwtGuard } from '../auth/guard';
 import { HomeService } from './home.service';
 import { CreateHomeDto, EditHomeDto } from './dto';
@@ -24,14 +38,19 @@ export class HomeController {
   @UseGuards(JwtGuard)
   @HttpCode(HttpStatus.NO_CONTENT)
   @Delete()
-  deleteBookmarkById() {
+  deleteBookmark() {
     return this.homeService.deleteHome();
   }
 
   @UseGuards(JwtGuard)
   @Post()
   @UseInterceptors(FileInterceptor('image', fileUploadConfig('./uploads/')))
-  async uploadSingleFile(@UploadedFile() image, @Body() dto: CreateHomeDto) {
+  async createHome(@UploadedFile() image, @Body() dto: CreateHomeDto) {
     return this.homeService.createHome(dto, image);
+  }
+
+  @Get(':imagename')
+  findImage(@Param('imagename') imagename, @Res() res) {
+    return res.sendFile(imagename, { root: 'uploads' });
   }
 }

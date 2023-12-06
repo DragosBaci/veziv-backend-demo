@@ -19,11 +19,11 @@ describe('App e2e', () => {
       }),
     );
     await app.init();
-    await app.listen(8080);
+    await app.listen(8081);
 
     prisma = app.get(PrismaService);
     await prisma.cleanDb();
-    pactum.request.setBaseUrl('http://localhost:8080');
+    pactum.request.setBaseUrl('http://localhost:8081');
   });
 
   afterAll(() => app.close());
