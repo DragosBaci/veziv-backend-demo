@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
-import { BookmarkModule } from './bookmark/bookmark.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ConfigModule } from '@nestjs/config';
 import { HomeModule } from './home/home.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { AboutModule } from './about/about.module';
+import { WorkModule } from './work/work.module';
+import { CardModule } from './card/card.module';
 
 @Module({
   imports: [
@@ -13,9 +15,11 @@ import { MulterModule } from '@nestjs/platform-express';
     MulterModule.register({ dest: './uploads' }),
     AuthModule,
     UserModule,
-    BookmarkModule,
     PrismaModule,
     HomeModule,
+    AboutModule,
+    WorkModule,
+    CardModule,
   ],
 })
 export class AppModule {}
